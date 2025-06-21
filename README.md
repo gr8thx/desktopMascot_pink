@@ -1,0 +1,2 @@
+# desktopMascot_pink
+デスクトップマスコット
