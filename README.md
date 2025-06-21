@@ -6,4 +6,4 @@ pythonの練習ために作成したデスクトップマスコットです．
 画像は　https://catbottle.sakura.ne.jp/souko_fs.html
 から頂いております．
 
-![](documents/screenshot.drawio.png)
+![](documents/screenshot.png)
