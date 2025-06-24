@@ -327,9 +327,18 @@ class Mascot:
         rand_lines = random.randint(0, lines_total-1)
         rand_empty = random.randint(0, 20) # 数回に一回だけセリフが無くなる
 
-        if(datetime.now().minute==0): # 時報
+        if datetime.now().hour == 10 and datetime.now().minute == 30: # 時報10:30
             self.dispImageBubble("assets/bubble_angular.png",
-                                 datetime.now().strftime("世界の針がひとつ刻みを進めた\n%H:%M をお知らせします"))
+                                 datetime.now().strftime("午前の部の始まりですよー。\n%H:%M をお知らせします"))
+        if datetime.now().hour == 13 and datetime.now().minute == 30: # 時報13:30
+            self.dispImageBubble("assets/bubble_angular.png",
+                                 datetime.now().strftime("午後の部の始まりですよー。\n%H:%M をお知らせします"))
+        elif datetime.now().hour == 15 and datetime.now().minute == 20: # 時報15:20
+            self.dispImageBubble("assets/bubble_angular.png",
+                                 datetime.now().strftime("終了10分前ですよー。\n%H:%M をお知らせします"))      
+        elif(datetime.now().minute==0): # 時報
+            self.dispImageBubble("assets/bubble_angular.png",
+                                 datetime.now().strftime("世界の針がひとつ刻みを進めた。\n%H:%M をお知らせします"))
         elif(rand_empty==0):
             self.dispImageBubble("","") # セリフ無し（吹き出しを消す）
         elif(rand_empty==1): # 吹き出しがギザギザになる。
