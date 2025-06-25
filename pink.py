@@ -330,7 +330,7 @@ class Mascot:
         if datetime.now().hour == 10 and datetime.now().minute == 30: # 時報10:30
             self.dispImageBubble("assets/bubble_angular.png",
                                  datetime.now().strftime("午前の部の始まりですよー。\n%H:%M をお知らせします"))
-        if datetime.now().hour == 13 and datetime.now().minute == 30: # 時報13:30
+        elif datetime.now().hour == 13 and datetime.now().minute == 30: # 時報13:30
             self.dispImageBubble("assets/bubble_angular.png",
                                  datetime.now().strftime("午後の部の始まりですよー。\n%H:%M をお知らせします"))
         elif datetime.now().hour == 15 and datetime.now().minute == 20: # 時報15:20
