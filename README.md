@@ -6,4 +6,6 @@ pythonの練習ために作成したデスクトップマスコットです．
 画像は　https://catbottle.sakura.ne.jp/souko_fs.html
 から頂いております．
 
+時報のチャイム音は、ＮＨＫクリエイティブ・ライブラリー から頂いております．
+
 ![](documents/screenshot.png)
