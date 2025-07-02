@@ -8,6 +8,9 @@ from tkinter import messagebox
 #天気予報APIで使う
 import requests
 from datetime import datetime
+# 時報のチャイム音(.mp3)に使う
+import pygame
+import time
 
 import ctypes
 try:
@@ -49,6 +52,10 @@ def get_weather():
 # ----------
 
 class Mascot:
+
+    # 時報の音
+    pygame.mixer.init()
+    pygame.mixer.music.load("assets/chime_nhk.mp3")
 
     """
      events
@@ -330,9 +337,21 @@ class Mascot:
         if datetime.now().hour == 10 and datetime.now().minute == 30: # 時報10:30
             self.dispImageBubble("assets/bubble_angular.png",
                                  datetime.now().strftime("午前の部の始まりですよー。\n%H:%M をお知らせします"))
+            pygame.mixer.music.play()
+            while pygame.mixer.music.get_busy():
+                time.sleep(0.1)
+        elif datetime.now().hour == 12 and datetime.now().minute == 30: # 時報12:30
+            self.dispImageBubble("assets/bubble_angular.png",
+                                 datetime.now().strftime("昼休みですよー。\n%H:%M をお知らせします"))
+            pygame.mixer.music.play()
+            while pygame.mixer.music.get_busy():
+                time.sleep(0.1)
         elif datetime.now().hour == 13 and datetime.now().minute == 30: # 時報13:30
             self.dispImageBubble("assets/bubble_angular.png",
                                  datetime.now().strftime("午後の部の始まりですよー。\n%H:%M をお知らせします"))
+            pygame.mixer.music.play()
+            while pygame.mixer.music.get_busy():
+                time.sleep(0.1)
         elif datetime.now().hour == 15 and datetime.now().minute == 20: # 時報15:20
             self.dispImageBubble("assets/bubble_angular.png",
                                  datetime.now().strftime("終了10分前ですよー。\n%H:%M をお知らせします"))      
