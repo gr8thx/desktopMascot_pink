@@ -498,7 +498,6 @@ class Mascot:
         with open(path,encoding='utf_8') as f: # UTF-8を指定しないと上手くいかない？
             self.lines_list = [s.rstrip() for s in f.readlines()]
         #print(self.lines_list)
-        
 
     # 顔の差分画像を2秒ごとに切り替える
     def repeatChange(self):
@@ -519,40 +518,48 @@ class Mascot:
         rand_lines = random.randint(0, lines_total-1)
         rand_empty = random.randint(0, 20) # 数回に一回だけセリフが無くなる
 
-        is_1030done = False # 時報フラグ（1度だけ時報を鳴らす）
-        is_1230done = False
-        is_1330done = False
 
         if datetime.now().hour == 10 and datetime.now().minute == 30: # 時報10:30
             self.dispImageBubble("assets/bubble_angular.png",
                                  datetime.now().strftime("午前の部の始まりですよー。\n%H:%M をお知らせします"))
-            if not is_1030done :
+            if not self.is_1030done : # 時報フラグ（1度だけ時報を鳴らす）
                 pygame.mixer.music.play()
                 while pygame.mixer.music.get_busy():
                     time.sleep(0.1)
-                is_1030done = True
+                self.is_1030done = True
         elif datetime.now().hour == 12 and datetime.now().minute == 30: # 時報12:30
             self.dispImageBubble("assets/bubble_angular.png",
                                  datetime.now().strftime("昼休みですよー。\n%H:%M をお知らせします"))
-            if not is_1230done :
+            if not self.is_1230done :
                 pygame.mixer.music.play()
                 while pygame.mixer.music.get_busy():
                     time.sleep(0.1)
-                is_1230done = True
+                self.is_1230done = True
         elif datetime.now().hour == 13 and datetime.now().minute == 30: # 時報13:30
             self.dispImageBubble("assets/bubble_angular.png",
                                  datetime.now().strftime("午後の部の始まりですよー。\n%H:%M をお知らせします"))
-            if not is_1330done :
+            if not self.is_1330done :
                 pygame.mixer.music.play()
                 while pygame.mixer.music.get_busy():
                     time.sleep(0.1)
-                is_1330done = True
+                self.is_1330done = True
         elif datetime.now().hour == 15 and datetime.now().minute == 20: # 時報15:20
             self.dispImageBubble("assets/bubble_angular.png",
-                                 datetime.now().strftime("終了10分前ですよー。\n%H:%M をお知らせします"))      
+                                 datetime.now().strftime("終了10分前ですよー。\n%H:%M をお知らせします"))            
+            if not self.is_1520done :
+                pygame.mixer.music.play()
+                while pygame.mixer.music.get_busy():
+                    time.sleep(0.1)
+                self.is_1520done = True
         elif(datetime.now().minute==0): # 時報
             self.dispImageBubble("assets/bubble_angular.png",
                                  datetime.now().strftime("世界の針がひとつ刻みを進めた。\n%H:%M をお知らせします"))
+        elif(datetime.now().minute==1): #時報解除処理
+            self.is_1030done = False # 時報フラグを解除
+            self.is_1230done = False
+            self.is_1330done = False
+            self.is_1520done = False
+            self.dispImageBubble("assets/bubble.png",self.lines_list[rand_lines])
         elif(rand_empty==0):
             self.dispImageBubble("","") # セリフ無し（吹き出しを消す）
         elif(rand_empty==1): # 吹き出しがギザギザになる。
@@ -587,6 +594,10 @@ class Mascot:
         # 時報の音。初期化は一度だけ行う。
         pygame.mixer.init()
         pygame.mixer.music.load("assets/chime_nhk.mp3")
+        self.is_1030done = False # 時報フラグ（1度だけ時報を鳴らす）
+        self.is_1230done = False
+        self.is_1330done = False
+        self.is_1520done = False
 
         self.origin = (0, 0)
         self.isMouseDown = False
