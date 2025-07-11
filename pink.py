@@ -1,5 +1,6 @@
 # デスクトップマスコット 伺か みたいなやつ
 import tkinter as tk
+from tkinter import ttk
 import os
 import glob
 import random
@@ -12,11 +13,199 @@ from datetime import datetime
 import pygame
 import time
 
+#ランチャーに使う
+import subprocess
+import configparser
+
 import ctypes
 try:
     ctypes.windll.shcore.SetProcessDpiAwareness(True)
 except:
     pass
+
+
+# ----------
+# アプリランチャー
+
+class Luncher:
+
+    # config.iniの読み込み
+    config = configparser.ConfigParser()
+    config.read("config.ini")
+
+    direction = config.get("Gneneral", "direction")
+
+    #icon0_path = config.get("IconPaths", "icon0_path")
+    #icon1_path = config.get("IconPaths", "icon1_path")
+    icon2_path = config.get("IconPaths", "icon2_path")
+    icon3_path = config.get("IconPaths", "icon3_path")
+    icon4_path = config.get("IconPaths", "icon4_path")
+    icon5_path = config.get("IconPaths", "icon5_path")
+    icon6_path = config.get("IconPaths", "icon6_path")
+    #command1 = config.get("Commands", "command1")
+    command2 = config.get("Commands", "command2")
+    command3 = config.get("Commands", "command3")
+    command4 = config.get("Commands", "command4")
+    command5 = config.get("Commands", "command5")
+    command6 = config.get("Commands", "command6")
+
+
+    """
+     events
+    """
+    # These events handle dragging the window.
+    def mouseDown(self, e):
+        if e.num == 1: # 左クリックしたとき
+            self.origin = (e.x, e.y)
+            self.isMouseDown = True
+
+    def mouseRelease(self, e):
+        self.isMouseDown = False
+
+    def mouseMove(self, e):
+        if self.isMouseDown:
+            buf = self.root.geometry().split("+")
+            self.setPos(e.x - self.origin[0] + int(buf[1]),
+                        e.y - self.origin[1] + int(buf[2]),
+                        )
+    """
+     set geometry, Position
+    """
+    def setPos(self, x, y):
+        self.root.geometry("+%s+%s" % (x, y))
+
+    # The application is terminated by pressing the "ESC" key.
+    def keyRelease(self, e):
+        if e.keycode == 27:
+            self.root.destroy()
+
+        
+    def lunch_icon1(self,event=None):
+        subprocess.Popen([r"C:\Program Files\Google\Chrome\Application\chrome.exe",
+        "-incognito",'--new-window https://mail.google.com/mail/ https://sites.google.com/kaienonline.com/trainingsite2020/home https://sites.google.com/kaienonline.com/area-kk/ https://kaien-t.slack.com/ https://ibmcsr.udemy.com/'])
+
+    def lunch_icon2(self,event=None):
+        subprocess.Popen(self.command2)
+
+    def lunch_icon3(self,event=None):
+        subprocess.Popen(self.command3)
+
+    def lunch_icon4(self,event=None):
+        subprocess.Popen(self.command4)
+
+    def lunch_icon5(self,event=None):
+        subprocess.Popen(self.command5)
+
+    def lunch_icon6(self,event=None):
+        subprocess.Popen(self.command6)
+
+
+    def main_luncher(self):
+
+        #self.root = tk.Tk()
+        self.top = tk.Toplevel(root) #別クラスの場合はこっち
+        self.top.overrideredirect(True)
+        #root.wm_attributes("-transparentcolor", "red")
+        #style = ttk.Style()
+        #style.configure("Transparent.TFrame", background="red")
+        frame = ttk.Frame(self.top, style="Transparent.TFrame", width=400, height=300)
+        frame.pack()
+
+        self.canvas0 = tk.Canvas(frame, width=28, height=28,bg="red", highlightthickness=0, bd=0)
+        if self.direction != "Y":
+            self.canvas0.pack(anchor=tk.NW,side=tk.LEFT)
+        else:
+            self.canvas0.pack()
+        img0 = tk.PhotoImage(file="icons/apps.png")
+        icon0 = self.canvas0.create_image(20, 20, image=img0)
+
+        self.screenInit(self.top)
+
+        canvas1 = tk.Canvas(frame, width=28, height=28,bg="red", highlightthickness=0, bd=0)
+        if self.direction != "Y":
+            canvas1.pack(anchor=tk.NW,side=tk.LEFT)
+        else:
+            canvas1.pack()
+        img1 = tk.PhotoImage(file="icons/internet.png")
+        icon1 = canvas1.create_image(20, 20, image=img1)
+
+        canvas2 = tk.Canvas(frame, width=28, height=28,bg="red", highlightthickness=0, bd=0)
+        if self.direction != "Y":
+            canvas2.pack(anchor=tk.NW,side=tk.LEFT)
+        else:
+            canvas2.pack()
+        img2 = tk.PhotoImage(file=self.icon2_path)
+        icon2 = canvas2.create_image(20, 20, image=img2)
+
+        canvas3 = tk.Canvas(frame, width=28, height=28,bg="red", highlightthickness=0, bd=0)
+        if self.direction != "Y":
+            canvas3.pack(anchor=tk.NW,side=tk.LEFT)
+        else:
+            canvas3.pack()
+        img3 = tk.PhotoImage(file=self.icon3_path)
+        icon3 = canvas3.create_image(20, 20, image=img3)
+
+        canvas4 = tk.Canvas(frame, width=28, height=28,bg="red", highlightthickness=0, bd=0)
+        if self.direction != "Y":
+            canvas4.pack(anchor=tk.NW,side=tk.LEFT)
+        else:
+            canvas4.pack()
+        img4 = tk.PhotoImage(file=self.icon4_path)
+        icon4 = canvas4.create_image(20, 20, image=img4)
+
+        canvas5 = tk.Canvas(frame, width=28, height=28,bg="red", highlightthickness=0, bd=0)
+        if self.direction != "Y":
+            canvas5.pack(anchor=tk.NW,side=tk.LEFT)
+        else:
+            canvas5.pack()
+        img5 = tk.PhotoImage(file=self.icon5_path)
+        icon5 = canvas5.create_image(20, 20, image=img5)
+
+        canvas6 = tk.Canvas(frame, width=28, height=28,bg="red", highlightthickness=0, bd=0)
+        if self.direction != "Y":
+            canvas6.pack(anchor=tk.NW,side=tk.LEFT)
+        else:
+            canvas6.pack()
+        img6 = tk.PhotoImage(file=self.icon6_path)
+        icon6 = canvas6.create_image(20, 20, image=img6)
+
+        self.top.configure(bg="red")  # 背景を透明にしたい色に設定
+        #self.top.wm_attributes("-transparentcolor", canvas1["bg"])
+        self.top.wm_attributes("-transparentcolor", "red")
+        self.top.attributes("-topmost", True)
+
+        # イベントバインド
+        canvas1.tag_bind(icon1, "<Button-1>", self.lunch_icon1)
+        canvas2.tag_bind(icon2, "<Button-1>", self.lunch_icon2)
+        canvas3.tag_bind(icon3, "<Button-1>", self.lunch_icon3)
+        canvas4.tag_bind(icon4, "<Button-1>", self.lunch_icon4)
+        canvas5.tag_bind(icon5, "<Button-1>", self.lunch_icon5)
+        canvas6.tag_bind(icon6, "<Button-1>", self.lunch_icon6)
+
+        self.top.mainloop()
+
+    def screenInit(self,root):
+    
+        # Set window size
+        offset_x = root.winfo_screenwidth() -250-200
+        offset_y = root.winfo_screenheight() -400+200
+        self.top.geometry("263x349"+"+"+str(offset_x)+"+"+str(offset_y))
+        """
+            Bind events
+        """
+        self.canvas0.bind("<Button>", self.mouseDown)
+        self.canvas0.bind("<ButtonRelease>", self.mouseRelease)
+        self.canvas0.bind("<Motion>", self.mouseMove)
+        self.top.bind_all("<KeyRelease>", self.keyRelease)
+
+    def __init__(self,root):
+
+        self.root = root # わけわからんが
+
+        self.origin = (0, 0)
+        self.isMouseDown = False
+        self.main_luncher()
+
 
 # ----------
 # 天気予報API
@@ -334,24 +523,34 @@ class Mascot:
         rand_lines = random.randint(0, lines_total-1)
         rand_empty = random.randint(0, 20) # 数回に一回だけセリフが無くなる
 
+        is_1030done = False # 時報フラグ（1度だけ時報を鳴らす）
+        is_1230done = False
+        is_1330done = False
+
         if datetime.now().hour == 10 and datetime.now().minute == 30: # 時報10:30
             self.dispImageBubble("assets/bubble_angular.png",
                                  datetime.now().strftime("午前の部の始まりですよー。\n%H:%M をお知らせします"))
-            pygame.mixer.music.play()
-            while pygame.mixer.music.get_busy():
-                time.sleep(0.1)
+            if not is_1030done :
+                pygame.mixer.music.play()
+                while pygame.mixer.music.get_busy():
+                    time.sleep(0.1)
+                is_1030done = True
         elif datetime.now().hour == 12 and datetime.now().minute == 30: # 時報12:30
             self.dispImageBubble("assets/bubble_angular.png",
                                  datetime.now().strftime("昼休みですよー。\n%H:%M をお知らせします"))
-            pygame.mixer.music.play()
-            while pygame.mixer.music.get_busy():
-                time.sleep(0.1)
+            if not is_1230done :
+                pygame.mixer.music.play()
+                while pygame.mixer.music.get_busy():
+                    time.sleep(0.1)
+                is_1230done = True
         elif datetime.now().hour == 13 and datetime.now().minute == 30: # 時報13:30
             self.dispImageBubble("assets/bubble_angular.png",
                                  datetime.now().strftime("午後の部の始まりですよー。\n%H:%M をお知らせします"))
-            pygame.mixer.music.play()
-            while pygame.mixer.music.get_busy():
-                time.sleep(0.1)
+            if not is_1330done :
+                pygame.mixer.music.play()
+                while pygame.mixer.music.get_busy():
+                    time.sleep(0.1)
+                is_1330done = True
         elif datetime.now().hour == 15 and datetime.now().minute == 20: # 時報15:20
             self.dispImageBubble("assets/bubble_angular.png",
                                  datetime.now().strftime("終了10分前ですよー。\n%H:%M をお知らせします"))      
@@ -385,22 +584,28 @@ class Mascot:
         self.root.after(500*(k+4), self.repeatChange) # ループ．関数を渡すために()は付けない．
         
 
-    def __init__(self):
+    def __init__(self,root):
+
+        self.root = root # よくわからんが
+
         self.origin = (0, 0)
         self.isMouseDown = False
 
         self.pngFileList()
         self.linesList()
 
-        self.root = tk.Tk()
+        #self.root = tk.Tk()
         self.screenOppaiInit()
         self.screenInit()
         self.bubbleInit()
         self.popupMenu()
         self.repeatChange()
-        self.root.mainloop()
+        #self.root.mainloop()
 
  
 
 if __name__ == "__main__":
-    m = Mascot()
+    root = tk.Tk()
+    m = Mascot(root)
+    l= Luncher(root)
+    root.mainloop()
