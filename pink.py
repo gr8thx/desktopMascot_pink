@@ -242,10 +242,6 @@ def get_weather():
 
 class Mascot:
 
-    # 時報の音
-    pygame.mixer.init()
-    pygame.mixer.music.load("assets/chime_nhk.mp3")
-
     """
      events
     """
@@ -588,6 +584,10 @@ class Mascot:
 
         self.root = root # よくわからんが
 
+        # 時報の音。初期化は一度だけ行う。
+        pygame.mixer.init()
+        pygame.mixer.music.load("assets/chime_nhk.mp3")
+
         self.origin = (0, 0)
         self.isMouseDown = False
 
@@ -600,7 +600,7 @@ class Mascot:
         self.bubbleInit()
         self.popupMenu()
         self.repeatChange()
-        #self.root.mainloop()
+        #self.root.mainloop() これはコメントアウトしておく
 
  
 
