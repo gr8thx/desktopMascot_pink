@@ -64,7 +64,7 @@ class Luncher:
 
     def mouseMove(self, e):
         if self.isMouseDown:
-            buf = self.root.geometry().split("+")
+            buf = self.top.geometry().split("+")
             self.setPos(e.x - self.origin[0] + int(buf[1]),
                         e.y - self.origin[1] + int(buf[2]),
                         )
@@ -72,7 +72,7 @@ class Luncher:
      set geometry, Position
     """
     def setPos(self, x, y):
-        self.root.geometry("+%s+%s" % (x, y))
+        self.top.geometry("+%s+%s" % (x, y))
 
     # The application is terminated by pressing the "ESC" key.
     def keyRelease(self, e):
